@@ -1,13 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Turret.h"
+#include "AimingComponent.h"
 
 // Sets default values
 ATurret::ATurret()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
+	AimingComponent = CreateDefaultSubobject<UAimingComponent>(FName("Aiming Component"));
 }
 
 // Called when the game starts or when spawned
@@ -17,17 +19,14 @@ void ATurret::BeginPlay()
 	
 }
 
-// Called every frame
-void ATurret::Tick(float DeltaTime)
+void ATurret::SetBarrelReference(UTurretBarrel * BarrelToSet)
 {
-	Super::Tick(DeltaTime);
-
+	AimingComponent->SetBarrelReference(BarrelToSet);
 }
 
 void ATurret::AimAt(FVector HitLocation)
 {
-	auto OurTurretName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"), *OurTurretName, *HitLocation.ToString());
+	AimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 // Called to bind functionality to input

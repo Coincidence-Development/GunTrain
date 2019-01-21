@@ -3,11 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
-#include "Turret.h"
-
 #include "GameFramework/PlayerController.h"
 #include "TrainPlayerController.generated.h"
+
+class ATurret;
 
 /**
  * 
