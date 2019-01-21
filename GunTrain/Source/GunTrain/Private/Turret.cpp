@@ -24,6 +24,11 @@ void ATurret::SetBarrelReference(UTurretBarrel * BarrelToSet)
 	AimingComponent->SetBarrelReference(BarrelToSet);
 }
 
+void ATurret::SetTurretHeadReference(UTurretHead * TurretHeadToSet)
+{
+	AimingComponent->SetTurretHeadReference(TurretHeadToSet);
+}
+
 void ATurret::AimAt(FVector HitLocation)
 {
 	AimingComponent->AimAt(HitLocation, LaunchSpeed);

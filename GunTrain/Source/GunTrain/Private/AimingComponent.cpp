@@ -3,20 +3,28 @@
 #include "AimingComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "TurretBarrel.h"
+#include "TurretHead.h"
 
 // Sets default values for this component's properties
 UAimingComponent::UAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
 
 void UAimingComponent::SetBarrelReference(UTurretBarrel * BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
+}
+
+void UAimingComponent::SetTurretHeadReference(UTurretHead * TurretHeadToSet)
+{
+	if (!TurretHeadToSet) { return; }
+	TurretHead = TurretHeadToSet;
 }
 
 void UAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -48,5 +56,6 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch);
+	TurretHead->Rotate(DeltaRotator.Yaw);
 }
 

@@ -8,6 +8,7 @@
 
 class UAimingComponent;
 class UTurretBarrel;
+class UTurretHead;
 
 UCLASS()
 class GUNTRAIN_API ATurret : public APawn
@@ -27,6 +28,8 @@ protected:
 public:	
 	UFUNCTION(BlueprintCallable, Category = SetUp)
 	void SetBarrelReference(UTurretBarrel* BarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = SetUp)
+	void SetTurretHeadReference(UTurretHead* TurretHeadToSet);
 
 	void AimAt(FVector HitLocation);
 
