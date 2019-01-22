@@ -9,6 +9,7 @@
 class UAimingComponent;
 class UTurretBarrel;
 class UTurretHead;
+class AProjectile_Base;
 
 UCLASS()
 class GUNTRAIN_API ATurret : public APawn
@@ -33,10 +34,18 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+
 private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 100000;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile_Base> Projectile;
+
+	UTurretBarrel* Barrel = nullptr;
 };
