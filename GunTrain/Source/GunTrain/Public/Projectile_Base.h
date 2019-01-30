@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Projectile_Base.generated.h"
 
+class UProjectileMovementComponent;
+
 UCLASS()
 class GUNTRAIN_API AProjectile_Base : public AActor
 {
@@ -22,5 +24,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void LaunchProjectile(float Speed);
+private:
+	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
 };

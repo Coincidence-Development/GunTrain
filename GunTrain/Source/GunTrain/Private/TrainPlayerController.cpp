@@ -1,29 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TrainPlayerController.h"
-#include "Turret.h"
+#include "AimingComponent.h"
 
 
 void ATrainPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTurret = GetControlledTurret();
-	if (!ControlledTurret)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possesing a turret"));
-	}
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController is possesing a turret"));
+	auto AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+
+	FoundAimingComponent(AimingComponent);
 }
 
 void ATrainPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	AimTowardsCrosshair();
-}
-
-ATurret* ATrainPlayerController::GetControlledTurret() const
-{
-	return Cast<ATurret>(GetPawn());
 }
 
 bool ATrainPlayerController::GetSightRayHitLocation(FVector & OUTHitLocation) const
@@ -37,20 +30,21 @@ bool ATrainPlayerController::GetSightRayHitLocation(FVector & OUTHitLocation) co
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		GetLookVectorHitLocation(LookDirection, OUTHitLocation);
+		return GetLookVectorHitLocation(LookDirection, OUTHitLocation);
 	}
-
-	return true;
+	return false;
 }
 
 void ATrainPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTurret()) { return; }
+	if (!GetPawn()) { return; }
+	auto AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
 
 	FVector HitLocation; // Out preameter
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		GetControlledTurret()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 }
 

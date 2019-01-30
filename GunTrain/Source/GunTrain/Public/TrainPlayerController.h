@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "TrainPlayerController.generated.h"
 
-class ATurret;
+class UAimingComponent;
 
 /**
  * 
@@ -22,7 +22,9 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
-	ATurret* GetControlledTurret() const;
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UAimingComponent* AimCompRef);
 
 private:
 	//Return an OUT parameter, true if hit landscape
@@ -38,8 +40,10 @@ private:
 		float CrosshairXLocation = .5;
 
 	UPROPERTY(EditAnywhere)
-		float CrosshairYLocation = .3333;
+		float CrosshairYLocation = .30;
 
 	UPROPERTY(EditAnywhere)
 		float LineTraceRange = 1000000;
+
+
 };

@@ -6,11 +6,6 @@
 #include "GameFramework/Pawn.h"
 #include "Turret.generated.h"
 
-class UAimingComponent;
-class UTurretBarrel;
-class UTurretHead;
-class AProjectile_Base;
-
 UCLASS()
 class GUNTRAIN_API ATurret : public APawn
 {
@@ -23,29 +18,4 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UAimingComponent* AimingComponent = nullptr;
-
-public:	
-	UFUNCTION(BlueprintCallable, Category = SetUp)
-	void SetBarrelReference(UTurretBarrel* BarrelToSet);
-	UFUNCTION(BlueprintCallable, Category = SetUp)
-	void SetTurretHeadReference(UTurretHead* TurretHeadToSet);
-
-	void AimAt(FVector HitLocation);
-
-	UFUNCTION(BlueprintCallable)
-	void Fire();
-
-private:
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000;
-
-	UPROPERTY(EditAnywhere, Category = Setup)
-	TSubclassOf<AProjectile_Base> Projectile;
-
-	UTurretBarrel* Barrel = nullptr;
 };
